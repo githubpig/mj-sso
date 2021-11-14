@@ -1,0 +1,831 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mj.sso.server.mapper.SysUserMapper">
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.mj.sso.server.core.model.SysUser">
+		<id column="user_id" property="userId" />
+		<result column="dept_id" property="deptId" />
+		<result column="login_name" property="loginName" />
+		<result column="user_name" property="userName" />
+		<result column="user_type" property="userType" />
+		<result column="email" property="email" />
+		<result column="phonenumber" property="phonenumber" />
+		<result column="description" property="description" />
+		<result column="email_flag" property="emailFlag" />
+		<result column="phone_flag" property="phoneFlag" />
+		<result column="score" property="score" />
+		<result column="sex" property="sex" />
+		<result column="avatar" property="avatar" />
+		<result column="password" property="password" />
+		<result column="salt" property="salt" />
+		<result column="status" property="status" />
+		<result column="del_flag" property="delFlag" />
+		<result column="login_ip" property="loginIp" />
+		<result column="login_date" property="loginDate" />
+		<result column="create_by" property="createBy" />
+		<result column="create_time" property="createTime" />
+		<result column="update_by" property="updateBy" />
+		<result column="update_time" property="updateTime" />
+		<result column="remark" property="remark" />
+		<result column="last_login_time" property="lastLoginTime" />
+		<result column="from_sys" property="fromSys" />
+		<result column="openid" property="openid" />
+		<result column="unionid" property="unionid" />
+	</resultMap>
+
+	<!-- 通用查询结果列 -->
+	<sql id="Base_Column_List">
+        user_id,
+        dept_id,
+        login_name,
+        user_name,
+        user_type,
+        email,
+        phonenumber,
+        description,
+        email_flag,
+        phone_flag,
+        score,
+        sex,
+        avatar,
+        password,
+        salt,
+        status,
+        del_flag,
+        login_ip,
+        login_date,
+        create_by,
+        create_time,
+        update_by,
+        update_time,
+        remark,
+        last_login_time,
+        from_sys,
+        openid,
+        unionid
+    </sql>
+
+	<!-- 通用查询语句(数据库comment中含有?则不显示字段注释)) -->
+	<sql id="Base_Where_List">
+		<!-- 用户ID查询 -->
+		<if test="userId != null and userId != ''">
+			AND user_id = #{userId}
+		</if>
+		<!-- 部门ID查询 -->
+		<if test="deptId != null and deptId != ''">
+			AND dept_id = #{deptId}
+		</if>
+		<!-- 登录账号查询 -->
+		<if test="loginName != null and loginName != ''">
+			AND login_name = #{loginName}
+		</if>
+		<!-- 登录账号模糊查询 -->
+		<if test="loginName != null and loginName != ''">
+			AND login_name LIKE CONCAT('%', #{loginName}, '%')
+		</if>
+		<!-- 用户昵称查询 -->
+		<if test="userName != null and userName != ''">
+			AND user_name = #{userName}
+		</if>
+		<!-- 用户昵称模糊查询 -->
+		<if test="userName != null and userName != ''">
+			AND user_name LIKE CONCAT('%', #{userName}, '%')
+		</if>
+		<!-- 用户类型（00系统用户 01注册用户）查询 -->
+		<if test="userType != null and userType != ''">
+			AND user_type = #{userType}
+		</if>
+		<!-- 用户类型（00系统用户 01注册用户）模糊查询 -->
+		<if test="userType != null and userType != ''">
+			AND user_type LIKE CONCAT('%', #{userType}, '%')
+		</if>
+		<!-- 用户邮箱查询 -->
+		<if test="email != null and email != ''">
+			AND email = #{email}
+		</if>
+		<!-- 用户邮箱模糊查询 -->
+		<if test="email != null and email != ''">
+			AND email LIKE CONCAT('%', #{email}, '%')
+		</if>
+		<!-- 手机号码查询 -->
+		<if test="phonenumber != null and phonenumber != ''">
+			AND phonenumber = #{phonenumber}
+		</if>
+		<!-- 手机号码模糊查询 -->
+		<if test="phonenumber != null and phonenumber != ''">
+			AND phonenumber LIKE CONCAT('%', #{phonenumber}, '%')
+		</if>
+		<!-- 个人介绍查询 -->
+		<if test="description != null and description != ''">
+			AND description = #{description}
+		</if>
+		<!-- 个人介绍模糊查询 -->
+		<if test="description != null and description != ''">
+			AND description LIKE CONCAT('%', #{description}, '%')
+		</if>
+		<!-- 邮箱验证标志查询 -->
+		<if test="emailFlag != null and emailFlag != ''">
+			AND email_flag = #{emailFlag}
+		</if>
+		<!-- 手机验证标志查询 -->
+		<if test="phoneFlag != null and phoneFlag != ''">
+			AND phone_flag = #{phoneFlag}
+		</if>
+		<!-- 积分查询 -->
+		<if test="score != null and score != ''">
+			AND score = #{score}
+		</if>
+		<!-- 用户性别（0男 1女 2未知）查询 -->
+		<if test="sex != null and sex != ''">
+			AND sex = #{sex}
+		</if>
+		<!-- 头像路径查询 -->
+		<if test="avatar != null and avatar != ''">
+			AND avatar = #{avatar}
+		</if>
+		<!-- 头像路径模糊查询 -->
+		<if test="avatar != null and avatar != ''">
+			AND avatar LIKE CONCAT('%', #{avatar}, '%')
+		</if>
+		<!-- 密码查询 -->
+		<if test="password != null and password != ''">
+			AND password = #{password}
+		</if>
+		<!-- 密码模糊查询 -->
+		<if test="password != null and password != ''">
+			AND password LIKE CONCAT('%', #{password}, '%')
+		</if>
+		<!-- 盐加密查询 -->
+		<if test="salt != null and salt != ''">
+			AND salt = #{salt}
+		</if>
+		<!-- 盐加密模糊查询 -->
+		<if test="salt != null and salt != ''">
+			AND salt LIKE CONCAT('%', #{salt}, '%')
+		</if>
+		<!-- 帐号状态（0正常 1停用）查询 -->
+		<if test="status != null and status != ''">
+			AND status = #{status}
+		</if>
+		<!-- 删除标志（0代表存在 2代表删除）查询 -->
+		<if test="delFlag != null and delFlag != ''">
+			AND del_flag = #{delFlag}
+		</if>
+		<!-- 最后登陆IP查询 -->
+		<if test="loginIp != null and loginIp != ''">
+			AND login_ip = #{loginIp}
+		</if>
+		<!-- 最后登陆IP模糊查询 -->
+		<if test="loginIp != null and loginIp != ''">
+			AND login_ip LIKE CONCAT('%', #{loginIp}, '%')
+		</if>
+		<!-- 最后登陆时间查询 -->
+		<if test="loginDate != null and loginDate != ''">
+			AND login_date = #{loginDate}
+		</if>
+		<!-- 创建者查询 -->
+		<if test="createBy != null and createBy != ''">
+			AND create_by = #{createBy}
+		</if>
+		<!-- 创建者模糊查询 -->
+		<if test="createBy != null and createBy != ''">
+			AND create_by LIKE CONCAT('%', #{createBy}, '%')
+		</if>
+		<!-- 创建时间查询 -->
+		<if test="createTime != null and createTime != ''">
+			AND create_time = #{createTime}
+		</if>
+		<!-- 更新者查询 -->
+		<if test="updateBy != null and updateBy != ''">
+			AND update_by = #{updateBy}
+		</if>
+		<!-- 更新者模糊查询 -->
+		<if test="updateBy != null and updateBy != ''">
+			AND update_by LIKE CONCAT('%', #{updateBy}, '%')
+		</if>
+		<!-- 更新时间查询 -->
+		<if test="updateTime != null and updateTime != ''">
+			AND update_time = #{updateTime}
+		</if>
+		<!-- 备注查询 -->
+		<if test="remark != null and remark != ''">
+			AND remark = #{remark}
+		</if>
+		<!-- 备注模糊查询 -->
+		<if test="remark != null and remark != ''">
+			AND remark LIKE CONCAT('%', #{remark}, '%')
+		</if>
+		<!-- 用于判断每天的第一次登录查询 -->
+		<if test="lastLoginTime != null and lastLoginTime != ''">
+			AND last_login_time = #{lastLoginTime}
+		</if>
+		<!-- 用户来自哪个系统查询 -->
+		<if test="fromSys != null and fromSys != ''">
+			AND from_sys = #{fromSys}
+		</if>
+		<!-- 微信openid查询 -->
+		<if test="openid != null and openid != ''">
+			AND openid = #{openid}
+		</if>
+		<!-- 微信openid模糊查询 -->
+		<if test="openid != null and openid != ''">
+			AND openid LIKE CONCAT('%', #{openid}, '%')
+		</if>
+		<!-- 微信unionid查询 -->
+		<if test="unionid != null and unionid != ''">
+			AND unionid = #{unionid}
+		</if>
+		<!-- 微信unionid模糊查询 -->
+		<if test="unionid != null and unionid != ''">
+			AND unionid LIKE CONCAT('%', #{unionid}, '%')
+		</if>
+	</sql>
+
+	<insert id="saveSelectiveSysUser" parameterType="com.mj.sso.server.core.model.SysUser" >
+		INSERT INTO sys_user
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="userId != null ">
+				user_id,
+			</if>
+			<if test="deptId != null ">
+				dept_id,
+			</if>
+			<if test="loginName != null ">
+				login_name,
+			</if>
+			<if test="userName != null ">
+				user_name,
+			</if>
+			<if test="userType != null ">
+				user_type,
+			</if>
+			<if test="email != null ">
+				email,
+			</if>
+			<if test="phonenumber != null ">
+				phonenumber,
+			</if>
+			<if test="description != null ">
+				description,
+			</if>
+			<if test="emailFlag != null ">
+				email_flag,
+			</if>
+			<if test="phoneFlag != null ">
+				phone_flag,
+			</if>
+			<if test="score != null ">
+				score,
+			</if>
+			<if test="sex != null ">
+				sex,
+			</if>
+			<if test="avatar != null ">
+				avatar,
+			</if>
+			<if test="password != null ">
+				password,
+			</if>
+			<if test="salt != null ">
+				salt,
+			</if>
+			<if test="status != null ">
+				status,
+			</if>
+			<if test="delFlag != null ">
+				del_flag,
+			</if>
+			<if test="loginIp != null ">
+				login_ip,
+			</if>
+			<if test="loginDate != null ">
+				login_date,
+			</if>
+			<if test="createBy != null ">
+				create_by,
+			</if>
+			<if test="createTime != null ">
+				create_time,
+			</if>
+			<if test="updateBy != null ">
+				update_by,
+			</if>
+			<if test="updateTime != null ">
+				update_time,
+			</if>
+			<if test="remark != null ">
+				remark,
+			</if>
+			<if test="lastLoginTime != null ">
+				last_login_time,
+			</if>
+			<if test="fromSys != null ">
+				from_sys,
+			</if>
+			<if test="openid != null ">
+				openid,
+			</if>
+			<if test="unionid != null ">
+				unionid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="userId != null ">
+				#{userId},
+			</if>
+			<if test="deptId != null ">
+				#{deptId},
+			</if>
+			<if test="loginName != null ">
+				#{loginName},
+			</if>
+			<if test="userName != null ">
+				#{userName},
+			</if>
+			<if test="userType != null ">
+				#{userType},
+			</if>
+			<if test="email != null ">
+				#{email},
+			</if>
+			<if test="phonenumber != null ">
+				#{phonenumber},
+			</if>
+			<if test="description != null ">
+				#{description},
+			</if>
+			<if test="emailFlag != null ">
+				#{emailFlag},
+			</if>
+			<if test="phoneFlag != null ">
+				#{phoneFlag},
+			</if>
+			<if test="score != null ">
+				#{score},
+			</if>
+			<if test="sex != null ">
+				#{sex},
+			</if>
+			<if test="avatar != null ">
+				#{avatar},
+			</if>
+			<if test="password != null ">
+				#{password},
+			</if>
+			<if test="salt != null ">
+				#{salt},
+			</if>
+			<if test="status != null ">
+				#{status},
+			</if>
+			<if test="delFlag != null ">
+				#{delFlag},
+			</if>
+			<if test="loginIp != null ">
+				#{loginIp},
+			</if>
+			<if test="loginDate != null ">
+				#{loginDate},
+			</if>
+			<if test="createBy != null ">
+				#{createBy},
+			</if>
+			<if test="createTime != null ">
+				#{createTime},
+			</if>
+			<if test="updateBy != null ">
+				#{updateBy},
+			</if>
+			<if test="updateTime != null ">
+				#{updateTime},
+			</if>
+			<if test="remark != null ">
+				#{remark},
+			</if>
+			<if test="lastLoginTime != null ">
+				#{lastLoginTime},
+			</if>
+			<if test="fromSys != null ">
+				#{fromSys},
+			</if>
+			<if test="openid != null ">
+				#{openid},
+			</if>
+			<if test="unionid != null ">
+				#{unionid},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 添加 -->
+	<insert id="saveSysUser" parameterType="com.mj.sso.server.core.model.SysUser" >
+        INSERT INTO sys_user (
+	        user_id,
+	        dept_id,
+	        login_name,
+	        user_name,
+	        user_type,
+	        email,
+	        phonenumber,
+	        description,
+	        email_flag,
+	        phone_flag,
+	        score,
+	        sex,
+	        avatar,
+	        password,
+	        salt,
+	        status,
+	        del_flag,
+	        login_ip,
+	        login_date,
+	        create_by,
+	        create_time,
+	        update_by,
+	        update_time,
+	        remark,
+	        last_login_time,
+	        from_sys,
+	        openid,
+	        unionid
+        )
+        VALUES(
+			#{userId},
+			#{deptId},
+			#{loginName},
+			#{userName},
+			#{userType},
+			#{email},
+			#{phonenumber},
+			#{description},
+			#{emailFlag},
+			#{phoneFlag},
+			#{score},
+			#{sex},
+			#{avatar},
+			#{password},
+			#{salt},
+			#{status},
+			#{delFlag},
+			#{loginIp},
+			#{loginDate},
+			#{createBy},
+			#{createTime},
+			#{updateBy},
+			#{updateTime},
+			#{remark},
+			#{lastLoginTime},
+			#{fromSys},
+			#{openid},
+			#{unionid}
+        )
+    </insert>
+
+	<!-- 更新 -->
+	<update id="updateSysUser" parameterType="com.mj.sso.server.core.model.SysUser" >
+		UPDATE sys_user
+		<set>
+			<if test="deptId != null and deptId != ''">
+				dept_id = #{deptId},
+			</if>
+			<if test="loginName != null and loginName != ''">
+				login_name = #{loginName},
+			</if>
+			<if test="userName != null and userName != ''">
+				user_name = #{userName},
+			</if>
+			<if test="userType != null and userType != ''">
+				user_type = #{userType},
+			</if>
+			<if test="email != null and email != ''">
+				email = #{email},
+			</if>
+			<if test="phonenumber != null and phonenumber != ''">
+				phonenumber = #{phonenumber},
+			</if>
+			<if test="description != null and description != ''">
+				description = #{description},
+			</if>
+			<if test="emailFlag != null and emailFlag != ''">
+				email_flag = #{emailFlag},
+			</if>
+			<if test="phoneFlag != null and phoneFlag != ''">
+				phone_flag = #{phoneFlag},
+			</if>
+			<if test="score != null and score != ''">
+				score = #{score},
+			</if>
+			<if test="sex != null and sex != ''">
+				sex = #{sex},
+			</if>
+			<if test="avatar != null and avatar != ''">
+				avatar = #{avatar},
+			</if>
+			<if test="password != null and password != ''">
+				password = #{password},
+			</if>
+			<if test="salt != null and salt != ''">
+				salt = #{salt},
+			</if>
+			<if test="status != null and status != ''">
+				status = #{status},
+			</if>
+			<if test="delFlag != null and delFlag != ''">
+				del_flag = #{delFlag},
+			</if>
+			<if test="loginIp != null and loginIp != ''">
+				login_ip = #{loginIp},
+			</if>
+			<if test="loginDate != null and loginDate != ''">
+				login_date = #{loginDate},
+			</if>
+			<if test="createBy != null and createBy != ''">
+				create_by = #{createBy},
+			</if>
+			<if test="createTime != null and createTime != ''">
+				create_time = #{createTime},
+			</if>
+			<if test="updateBy != null and updateBy != ''">
+				update_by = #{updateBy},
+			</if>
+			<if test="updateTime != null and updateTime != ''">
+				update_time = #{updateTime},
+			</if>
+			<if test="remark != null and remark != ''">
+				remark = #{remark},
+			</if>
+			<if test="lastLoginTime != null and lastLoginTime != ''">
+				last_login_time = #{lastLoginTime},
+			</if>
+			<if test="fromSys != null and fromSys != ''">
+				from_sys = #{fromSys},
+			</if>
+			<if test="openid != null and openid != ''">
+				openid = #{openid},
+			</if>
+			<if test="unionid != null and unionid != ''">
+				unionid = #{unionid},
+			</if>
+		</set>
+		WHERE
+		user_id = #{userId}
+	</update>
+
+	<!-- id查询 -->
+	<select id="findSysUserById" parameterType="com.mj.sso.server.core.model.SysUser" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sys_user
+		WHERE
+		user_id = #{userId}
+	</select>
+
+	<!-- 分页查询-->
+	<select id="findSysUserList" parameterType="com.mj.sso.server.core.model.SysUser" resultMap="BaseResultMap">
+		SELECT
+		user_id,
+		dept_id,
+		login_name,
+		user_name,
+		user_type,
+		email,
+		phonenumber,
+		description,
+		email_flag,
+		phone_flag,
+		score,
+		sex,
+		avatar,
+		password,
+		salt,
+		status,
+		del_flag,
+		login_ip,
+		login_date,
+		create_by,
+		create_time,
+		update_by,
+		update_time,
+		remark,
+		last_login_time,
+		from_sys,
+		openid,
+		unionid
+		FROM sys_user
+		<where>
+			<if test="userId != null and userId != ''">
+				and user_id = #{userId}
+			</if>
+			<if test="deptId != null and deptId != ''">
+				and dept_id = #{deptId}
+			</if>
+			<if test="loginName != null and loginName != ''">
+				and login_name = #{loginName}
+			</if>
+			<if test="userName != null and userName != ''">
+				and user_name = #{userName}
+			</if>
+			<if test="userType != null and userType != ''">
+				and user_type = #{userType}
+			</if>
+			<if test="email != null and email != ''">
+				and email = #{email}
+			</if>
+			<if test="phonenumber != null and phonenumber != ''">
+				and phonenumber = #{phonenumber}
+			</if>
+			<if test="description != null and description != ''">
+				and description = #{description}
+			</if>
+			<if test="emailFlag != null and emailFlag != ''">
+				and email_flag = #{emailFlag}
+			</if>
+			<if test="phoneFlag != null and phoneFlag != ''">
+				and phone_flag = #{phoneFlag}
+			</if>
+			<if test="score != null and score != ''">
+				and score = #{score}
+			</if>
+			<if test="sex != null and sex != ''">
+				and sex = #{sex}
+			</if>
+			<if test="avatar != null and avatar != ''">
+				and avatar = #{avatar}
+			</if>
+			<if test="password != null and password != ''">
+				and password = #{password}
+			</if>
+			<if test="salt != null and salt != ''">
+				and salt = #{salt}
+			</if>
+			<if test="status != null and status != ''">
+				and status = #{status}
+			</if>
+			<if test="delFlag != null and delFlag != ''">
+				and del_flag = #{delFlag}
+			</if>
+			<if test="loginIp != null and loginIp != ''">
+				and login_ip = #{loginIp}
+			</if>
+			<if test="loginDate != null and loginDate != ''">
+				and login_date = #{loginDate}
+			</if>
+			<if test="createBy != null and createBy != ''">
+				and create_by = #{createBy}
+			</if>
+			<if test="createTime != null and createTime != ''">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateBy != null and updateBy != ''">
+				and update_by = #{updateBy}
+			</if>
+			<if test="updateTime != null and updateTime != ''">
+				and update_time = #{updateTime}
+			</if>
+			<if test="remark != null and remark != ''">
+				and remark = #{remark}
+			</if>
+			<if test="lastLoginTime != null and lastLoginTime != ''">
+				and last_login_time = #{lastLoginTime}
+			</if>
+			<if test="fromSys != null and fromSys != ''">
+				and from_sys = #{fromSys}
+			</if>
+			<if test="openid != null and openid != ''">
+				and openid = #{openid}
+			</if>
+			<if test="unionid != null and unionid != ''">
+				and unionid = #{unionid}
+			</if>
+		</where>
+	</select>
+
+	<!-- 分页查询 pagehelper用-->
+	<select id="findSysUserPageHelp" parameterType="com.mj.sso.server.core.model.SysUser" resultMap="BaseResultMap">
+		SELECT
+		user_id,
+		dept_id,
+		login_name,
+		user_name,
+		user_type,
+		email,
+		phonenumber,
+		description,
+		email_flag,
+		phone_flag,
+		score,
+		sex,
+		avatar,
+		password,
+		salt,
+		status,
+		del_flag,
+		login_ip,
+		login_date,
+		create_by,
+		create_time,
+		update_by,
+		update_time,
+		remark,
+		last_login_time,
+		from_sys,
+		openid,
+		unionid
+		FROM sys_user
+		<where>
+			<if test="userId != null and userId != ''">
+				and user_id = #{userId}
+			</if>
+			<if test="deptId != null and deptId != ''">
+				and dept_id = #{deptId}
+			</if>
+			<if test="loginName != null and loginName != ''">
+				and login_name = #{loginName}
+			</if>
+			<if test="userName != null and userName != ''">
+				and user_name = #{userName}
+			</if>
+			<if test="userType != null and userType != ''">
+				and user_type = #{userType}
+			</if>
+			<if test="email != null and email != ''">
+				and email = #{email}
+			</if>
+			<if test="phonenumber != null and phonenumber != ''">
+				and phonenumber = #{phonenumber}
+			</if>
+			<if test="description != null and description != ''">
+				and description = #{description}
+			</if>
+			<if test="emailFlag != null and emailFlag != ''">
+				and email_flag = #{emailFlag}
+			</if>
+			<if test="phoneFlag != null and phoneFlag != ''">
+				and phone_flag = #{phoneFlag}
+			</if>
+			<if test="score != null and score != ''">
+				and score = #{score}
+			</if>
+			<if test="sex != null and sex != ''">
+				and sex = #{sex}
+			</if>
+			<if test="avatar != null and avatar != ''">
+				and avatar = #{avatar}
+			</if>
+			<if test="password != null and password != ''">
+				and password = #{password}
+			</if>
+			<if test="salt != null and salt != ''">
+				and salt = #{salt}
+			</if>
+			<if test="status != null and status != ''">
+				and status = #{status}
+			</if>
+			<if test="delFlag != null and delFlag != ''">
+				and del_flag = #{delFlag}
+			</if>
+			<if test="loginIp != null and loginIp != ''">
+				and login_ip = #{loginIp}
+			</if>
+			<if test="loginDate != null and loginDate != ''">
+				and login_date = #{loginDate}
+			</if>
+			<if test="createBy != null and createBy != ''">
+				and create_by = #{createBy}
+			</if>
+			<if test="createTime != null and createTime != ''">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateBy != null and updateBy != ''">
+				and update_by = #{updateBy}
+			</if>
+			<if test="updateTime != null and updateTime != ''">
+				and update_time = #{updateTime}
+			</if>
+			<if test="remark != null and remark != ''">
+				and remark = #{remark}
+			</if>
+			<if test="lastLoginTime != null and lastLoginTime != ''">
+				and last_login_time = #{lastLoginTime}
+			</if>
+			<if test="fromSys != null and fromSys != ''">
+				and from_sys = #{fromSys}
+			</if>
+			<if test="openid != null and openid != ''">
+				and openid = #{openid}
+			</if>
+			<if test="unionid != null and unionid != ''">
+				and unionid = #{unionid}
+			</if>
+		</where>
+	</select>
+
+	<!-- 删除-->
+	<delete id="deleteSysUser" parameterType="com.mj.sso.server.core.model.SysUser" >
+        DELETE FROM sys_user
+        WHERE
+	        user_id = #{userId}
+    </delete>
+</mapper>

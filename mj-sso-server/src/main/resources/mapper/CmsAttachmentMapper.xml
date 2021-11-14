@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mj.sso.server.mapper.CmsAttachmentMapper">
+
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mj.sso.server.core.model.CmsAttachment">
+        <id column="attach_id" property="attachId" />
+        <result column="zid" property="zid" />
+        <result column="user_id" property="userId" />
+        <result column="file_type" property="fileType" />
+        <result column="file_name" property="fileName" />
+        <result column="file_path" property="filePath" />
+        <result column="file_url" property="fileUrl" />
+        <result column="size" property="size" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="sort" property="sort" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        attach_id,
+        zid,
+        user_id,
+        file_type,
+        file_name,
+        file_path,
+        file_url,
+        size,
+        create_by,
+        create_time,
+        sort
+    </sql>
+	
+	<!-- 通用查询语句(数据库comment中含有?则不显示字段注释)) -->
+	<sql id="Base_Where_List">
+		<!-- id查询 -->
+	    <if test="attachId != null and attachId != ''">
+	        AND attach_id = #{attachId}
+	    </if>
+    	<!-- id模糊查询 -->
+	    <if test="attachId != null and attachId != ''">
+	        AND attach_id LIKE CONCAT('%', #{attachId}, '%')
+	    </if>
+		<!-- 组ID查询 -->
+	    <if test="zid != null and zid != ''">
+	        AND zid = #{zid}
+	    </if>
+    	<!-- 组ID模糊查询 -->
+	    <if test="zid != null and zid != ''">
+	        AND zid LIKE CONCAT('%', #{zid}, '%')
+	    </if>
+	    <if test="userId != null and userId != ''">
+	        AND user_id = #{userId}
+	    </if>
+    	    <if test="userId != null and userId != ''">
+	        AND user_id LIKE CONCAT('%', #{userId}, '%')
+	    </if>
+		<!-- 文件类型，引用cms_filetype表ID查询 -->
+	    <if test="fileType != null and fileType != ''">
+	        AND file_type = #{fileType}
+	    </if>
+    	<!-- 文件类型，引用cms_filetype表ID模糊查询 -->
+	    <if test="fileType != null and fileType != ''">
+	        AND file_type LIKE CONCAT('%', #{fileType}, '%')
+	    </if>
+		<!-- 文件名称查询 -->
+	    <if test="fileName != null and fileName != ''">
+	        AND file_name = #{fileName}
+	    </if>
+    	<!-- 文件名称模糊查询 -->
+	    <if test="fileName != null and fileName != ''">
+	        AND file_name LIKE CONCAT('%', #{fileName}, '%')
+	    </if>
+		<!-- 相对路径查询 -->
+	    <if test="filePath != null and filePath != ''">
+	        AND file_path = #{filePath}
+	    </if>
+    	<!-- 相对路径模糊查询 -->
+	    <if test="filePath != null and filePath != ''">
+	        AND file_path LIKE CONCAT('%', #{filePath}, '%')
+	    </if>
+		<!-- url查询 -->
+	    <if test="fileUrl != null and fileUrl != ''">
+	        AND file_url = #{fileUrl}
+	    </if>
+    	<!-- url模糊查询 -->
+	    <if test="fileUrl != null and fileUrl != ''">
+	        AND file_url LIKE CONCAT('%', #{fileUrl}, '%')
+	    </if>
+		<!-- 文件空间查询 -->
+	    <if test="size != null and size != ''">
+	        AND size = #{size}
+	    </if>
+    		<!-- 用户ID查询 -->
+	    <if test="createBy != null and createBy != ''">
+	        AND create_by = #{createBy}
+	    </if>
+    	<!-- 用户ID模糊查询 -->
+	    <if test="createBy != null and createBy != ''">
+	        AND create_by LIKE CONCAT('%', #{createBy}, '%')
+	    </if>
+	    <if test="createTime != null and createTime != ''">
+	        AND create_time = #{createTime}
+	    </if>
+    		<!-- 排序查询 -->
+	    <if test="sort != null and sort != ''">
+	        AND sort = #{sort}
+	    </if>
+    </sql>
+
+    <insert id="saveSelectiveCmsAttachment" parameterType="java.util.Map" >
+        INSERT INTO cms_attachment
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="attachId != null ">
+					attach_id,
+				</if>
+				<if test="zid != null ">
+					zid,
+				</if>
+				<if test="userId != null ">
+					user_id,
+				</if>
+				<if test="fileType != null ">
+					file_type,
+				</if>
+				<if test="fileName != null ">
+					file_name,
+				</if>
+				<if test="filePath != null ">
+					file_path,
+				</if>
+				<if test="fileUrl != null ">
+					file_url,
+				</if>
+				<if test="size != null ">
+					size,
+				</if>
+				<if test="createBy != null ">
+					create_by,
+				</if>
+				<if test="createTime != null ">
+					create_time,
+				</if>
+				<if test="sort != null ">
+					sort,
+				</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+				<if test="attachId != null ">
+					#{attachId},
+				</if>
+				<if test="zid != null ">
+					#{zid},
+				</if>
+				<if test="userId != null ">
+					#{userId},
+				</if>
+				<if test="fileType != null ">
+					#{fileType},
+				</if>
+				<if test="fileName != null ">
+					#{fileName},
+				</if>
+				<if test="filePath != null ">
+					#{filePath},
+				</if>
+				<if test="fileUrl != null ">
+					#{fileUrl},
+				</if>
+				<if test="size != null ">
+					#{size},
+				</if>
+				<if test="createBy != null ">
+					#{createBy},
+				</if>
+				<if test="createTime != null ">
+					#{createTime},
+				</if>
+				<if test="sort != null ">
+					#{sort},
+				</if>
+        </trim>
+	</insert>
+
+   <!-- 添加 -->
+   <insert id="saveCmsAttachment" parameterType="java.util.Map" >
+        INSERT INTO cms_attachment (
+	        attach_id,
+	        zid,
+	        user_id,
+	        file_type,
+	        file_name,
+	        file_path,
+	        file_url,
+	        size,
+	        create_by,
+	        create_time,
+	        sort
+        )
+        VALUES(
+			#{attachId},
+			#{zid},
+			#{userId},
+			#{fileType},
+			#{fileName},
+			#{filePath},
+			#{fileUrl},
+			#{size},
+			#{createBy},
+			#{createTime},
+			#{sort}
+        )
+    </insert>
+	
+	<!-- 更新 -->
+    <update id="updateCmsAttachment" parameterType="java.util.Map" >
+        UPDATE cms_attachment
+        <set>
+        	<if test="zid != null and zid != ''">
+				zid = #{zid},
+        	</if>
+        	<if test="userId != null and userId != ''">
+				user_id = #{userId},
+        	</if>
+        	<if test="fileType != null and fileType != ''">
+				file_type = #{fileType},
+        	</if>
+        	<if test="fileName != null and fileName != ''">
+				file_name = #{fileName},
+        	</if>
+        	<if test="filePath != null and filePath != ''">
+				file_path = #{filePath},
+        	</if>
+        	<if test="fileUrl != null and fileUrl != ''">
+				file_url = #{fileUrl},
+        	</if>
+        	<if test="size != null and size != ''">
+				size = #{size},
+        	</if>
+        	<if test="createBy != null and createBy != ''">
+				create_by = #{createBy},
+        	</if>
+        	<if test="createTime != null and createTime != ''">
+				create_time = #{createTime},
+        	</if>
+        	<if test="sort != null and sort != ''">
+				sort = #{sort},
+        	</if>
+		</set>
+        WHERE 
+	        attach_id = #{attachId}
+    </update>
+	
+	<!-- id查询 -->
+	<select id="findCmsAttachmentById" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM cms_attachment
+        WHERE
+	        attach_id = #{attachId}
+    </select>
+    
+    <!-- 分页查询-->
+    <select id="findCmsAttachmentList" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT 
+	        attach_id,
+	        zid,
+	        user_id,
+	        file_type,
+	        file_name,
+	        file_path,
+	        file_url,
+	        size,
+	        create_by,
+	        create_time,
+	        sort
+        FROM cms_attachment
+        <where>
+        	<if test="attachId != null and attachId != ''">
+				and attach_id = #{attachId}
+        	</if>
+        	<if test="zid != null and zid != ''">
+				and zid = #{zid}
+        	</if>
+        	<if test="userId != null and userId != ''">
+				and user_id = #{userId}
+        	</if>
+        	<if test="fileType != null and fileType != ''">
+				and file_type = #{fileType}
+        	</if>
+        	<if test="fileName != null and fileName != ''">
+				and file_name = #{fileName}
+        	</if>
+        	<if test="filePath != null and filePath != ''">
+				and file_path = #{filePath}
+        	</if>
+        	<if test="fileUrl != null and fileUrl != ''">
+				and file_url = #{fileUrl}
+        	</if>
+        	<if test="size != null and size != ''">
+				and size = #{size}
+        	</if>
+        	<if test="createBy != null and createBy != ''">
+				and create_by = #{createBy}
+        	</if>
+        	<if test="createTime != null and createTime != ''">
+				and create_time = #{createTime}
+        	</if>
+        	<if test="sort != null and sort != ''">
+				and sort = #{sort}
+        	</if>
+		</where>
+    </select>
+    
+    <!-- 分页查询 pagehelper用-->
+    <select id="findCmsAttachmentPageHelp" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT 
+	        attach_id,
+	        zid,
+	        user_id,
+	        file_type,
+	        file_name,
+	        file_path,
+	        file_url,
+	        size,
+	        create_by,
+	        create_time,
+	        sort
+        FROM cms_attachment
+        <where>
+        	<if test="attachId != null and attachId != ''">
+				and attach_id = #{attachId}
+        	</if>
+        	<if test="zid != null and zid != ''">
+				and zid = #{zid}
+        	</if>
+        	<if test="userId != null and userId != ''">
+				and user_id = #{userId}
+        	</if>
+        	<if test="fileType != null and fileType != ''">
+				and file_type = #{fileType}
+        	</if>
+        	<if test="fileName != null and fileName != ''">
+				and file_name = #{fileName}
+        	</if>
+        	<if test="filePath != null and filePath != ''">
+				and file_path = #{filePath}
+        	</if>
+        	<if test="fileUrl != null and fileUrl != ''">
+				and file_url = #{fileUrl}
+        	</if>
+        	<if test="size != null and size != ''">
+				and size = #{size}
+        	</if>
+        	<if test="createBy != null and createBy != ''">
+				and create_by = #{createBy}
+        	</if>
+        	<if test="createTime != null and createTime != ''">
+				and create_time = #{createTime}
+        	</if>
+        	<if test="sort != null and sort != ''">
+				and sort = #{sort}
+        	</if>
+		</where>
+    </select>
+    
+	<!-- 删除-->
+    <delete id="deleteCmsAttachment" parameterType="java.util.Map" >
+        DELETE FROM cms_attachment
+        WHERE
+	        attach_id = #{attachId}
+    </delete>
+</mapper>

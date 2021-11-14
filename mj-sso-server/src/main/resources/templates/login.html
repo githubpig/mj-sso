@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>统一认证中心</title>
+    <th:block th:include="common/common :: commonStyle" />
+    <link rel="stylesheet" th:href="@{/static/adminlte/plugins/iCheck/square/blue.css}">
+    <script type="text/javascript" src="../static/js/wxLogin.js" th:src="@{/static/js/wxLogin.js}"></script>
+    <style>
+        #main {
+            margin-top: 50px;
+            cursor: pointer;
+        }
+        #weixin {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            display: none;
+            flex-wrap: nowrap;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a><b>MJ</b>SSO</a>
+        </div>
+        <form th:action="@{/doLogin}">
+            <div class="login-box-body">
+                <p class="login-box-msg" style="line-height: 38px;"><span>统一认证中心</span><a id="main">
+                    <img style="display: inline-block;width: 38px;float: right;" src="../static/img/weixin.svg" th:src="@{/static/img/weixin.svg}"/>
+                </a></p>
+                <div class="form-group has-feedback">
+                    <input type="text" name="username" class="form-control" placeholder="Please input username." value="admin" maxlength="50" >
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" name="password" class="form-control" placeholder="Please input password." value="admin123" maxlength="50" >
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+
+              <!--  <#if errorMsg?exists>
+                    <p style="color: red;">${errorMsg}</p>
+                </#if>-->
+
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox icheck">
+                            <label>
+                                <input type="checkbox" name="ifRemember" >记住密码
+                            </label>
+                        </div>
+                    </div><!-- /.col -->
+                    <div class="col-xs-4">
+                        <input type="hidden" id="redirectUrl" name="redirect_url" th:value="${redirect_url !=''?redirect_url:''}" />
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
+                    </div>
+                    <div id="weixin"></div>
+                    <!--<div class="ui horizontal list login-oauth__list">
+                       <div class="item" title="使用 Gitee 账号授权登录">
+                            <a th:href="@{/auth/gitee}">
+                                <img src="../static/img/gitee.svg" th:src="@{/static/img/gitee.svg}"/>
+                            </a>
+                        </div>
+                        <div class="item" title="使用 GitHub 账号授权登录">
+                            <a th:href="@{/auth/github}">
+                                <img src="../static/img/github.svg" th:src="@{/static/img/github.svg}"/>
+                            </a>
+                        </div>
+                        <div class="item" title="功能开发中...">
+                            <a href="#">
+                                <img src="../static/img/weixin.svg" th:src="@{/static/img/weixin.svg}"/>
+                            </a>
+                        </div>
+                     <div class="item" title="功能开发中...">
+                            <a href="#">
+                                <img src="../static/img/qq.svg" th:src="@{/static/img/qq.svg}"/>
+                            </a>
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+<th:block th:include="common/common :: commonScript" />
+<script th:src="@{/static/adminlte/plugins/iCheck/icheck.min.js}"></script>
+<script th:src="@{/static/js/login.1.js}"></script>
+<script th:inline="javascript">
+     var wx_redirecturi = [[${wx_redirecturi}]];
+     function randomString(len, charSet) {
+        charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var randomString = '';
+        for (var i = 0; i < len; i++) {
+            var randomPoz = Math.floor(Math.random() * charSet.length);
+            randomString += charSet.substring(randomPoz,randomPoz+1);
+        }
+        return randomString;
+    }
+    //redirect_uri, weixinlogin.do  为本地回调方法！
+    var redirectUrl = $("#redirectUrl").val();
+    var obj = new WxLogin({
+        id: "weixin",
+        appid: "wxebc77ba335c983a9",   //此处填申请的appid
+        scope: "snsapi_login",
+        redirect_uri: wx_redirecturi,
+        state: randomString(32)+"_"+redirectUrl,
+        style: "white" //black
+    });
+    $(function() {
+        $("#main").click(function() {
+            $("#weixin").css({"display":"flex"});
+            $("#weixin").fadeIn("slow");
+        });
+        $("#weixin").click(function() {
+            $("#weixin").css({"display":"none"});
+            $("#weixin").fadeOut("slow");
+        })
+    });
+</script>
+</html>

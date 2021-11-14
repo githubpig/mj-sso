@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mj.sso.server.mapper.SysSsoMapper">
+
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mj.sso.server.core.model.SysSso">
+        <id column="id" property="id" />
+        <result column="logo" property="logo" />
+        <result column="app_name" property="appName" />
+        <result column="sso_login" property="ssoLogin" />
+        <result column="createtime" property="createtime" />
+        <result column="status" property="status" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        logo,
+        app_name,
+        sso_login,
+        createtime,
+        status
+    </sql>
+	
+	<!-- 通用查询语句(数据库comment中含有?则不显示字段注释)) -->
+	<sql id="Base_Where_List">
+		<!-- 主键查询 -->
+	    <if test="id != null and id != ''">
+	        AND id = #{id}
+	    </if>
+    		<!-- 应用logo查询 -->
+	    <if test="logo != null and logo != ''">
+	        AND logo = #{logo}
+	    </if>
+    	<!-- 应用logo模糊查询 -->
+	    <if test="logo != null and logo != ''">
+	        AND logo LIKE CONCAT('%', #{logo}, '%')
+	    </if>
+		<!-- 应用名称查询 -->
+	    <if test="appName != null and appName != ''">
+	        AND app_name = #{appName}
+	    </if>
+    	<!-- 应用名称模糊查询 -->
+	    <if test="appName != null and appName != ''">
+	        AND app_name LIKE CONCAT('%', #{appName}, '%')
+	    </if>
+		<!-- 应用登录url查询 -->
+	    <if test="ssoLogin != null and ssoLogin != ''">
+	        AND sso_login = #{ssoLogin}
+	    </if>
+    	<!-- 应用登录url模糊查询 -->
+	    <if test="ssoLogin != null and ssoLogin != ''">
+	        AND sso_login LIKE CONCAT('%', #{ssoLogin}, '%')
+	    </if>
+		<!-- 创建时间查询 -->
+	    <if test="createtime != null and createtime != ''">
+	        AND createtime = #{createtime}
+	    </if>
+    		<!-- 状态（启用:1,停用:0）查询 -->
+	    <if test="status != null and status != ''">
+	        AND status = #{status}
+	    </if>
+    </sql>
+	<select id="findSysSsoListByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from sys_sso where id in
+		<foreach collection="array" open="(" separator="," close=")" item="item">
+			#{item}
+		</foreach>
+	</select>
+    <insert id="saveSelectiveSysSso" parameterType="java.util.Map" >
+        INSERT INTO sys_sso
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+				<if test="id != null ">
+					id,
+				</if>
+				<if test="logo != null ">
+					logo,
+				</if>
+				<if test="appName != null ">
+					app_name,
+				</if>
+				<if test="ssoLogin != null ">
+					sso_login,
+				</if>
+				<if test="createtime != null ">
+					createtime,
+				</if>
+				<if test="status != null ">
+					status,
+				</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+				<if test="id != null ">
+					#{id},
+				</if>
+				<if test="logo != null ">
+					#{logo},
+				</if>
+				<if test="appName != null ">
+					#{appName},
+				</if>
+				<if test="ssoLogin != null ">
+					#{ssoLogin},
+				</if>
+				<if test="createtime != null ">
+					#{createtime},
+				</if>
+				<if test="status != null ">
+					#{status},
+				</if>
+        </trim>
+	</insert>
+
+   <!-- 添加 -->
+   <insert id="saveSysSso" parameterType="java.util.Map" >
+        INSERT INTO sys_sso (
+	        id,
+	        logo,
+	        app_name,
+	        sso_login,
+	        createtime,
+	        status
+        )
+        VALUES(
+			#{id},
+			#{logo},
+			#{appName},
+			#{ssoLogin},
+			#{createtime},
+			#{status}
+        )
+    </insert>
+	
+	<!-- 更新 -->
+    <update id="updateSysSso" parameterType="java.util.Map" >
+        UPDATE sys_sso
+        <set>
+        	<if test="logo != null and logo != ''">
+				logo = #{logo},
+        	</if>
+        	<if test="appName != null and appName != ''">
+				app_name = #{appName},
+        	</if>
+        	<if test="ssoLogin != null and ssoLogin != ''">
+				sso_login = #{ssoLogin},
+        	</if>
+        	<if test="createtime != null and createtime != ''">
+				createtime = #{createtime},
+        	</if>
+        	<if test="status != null and status != ''">
+				status = #{status},
+        	</if>
+		</set>
+        WHERE 
+	        id = #{id}
+    </update>
+	
+	<!-- id查询 -->
+	<select id="findSysSsoById" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM sys_sso
+        WHERE
+	        id = #{id}
+    </select>
+    
+    <!-- 分页查询-->
+    <select id="findSysSsoList" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT 
+	        id,
+	        logo,
+	        app_name,
+	        sso_login,
+	        createtime,
+	        status
+        FROM sys_sso
+        <where>
+        	<if test="id != null and id != ''">
+				and id = #{id}
+        	</if>
+        	<if test="logo != null and logo != ''">
+				and logo = #{logo}
+        	</if>
+        	<if test="appName != null and appName != ''">
+				and app_name = #{appName}
+        	</if>
+        	<if test="ssoLogin != null and ssoLogin != ''">
+				and sso_login = #{ssoLogin}
+        	</if>
+        	<if test="createtime != null and createtime != ''">
+				and createtime = #{createtime}
+        	</if>
+        	<if test="status != null and status != ''">
+				and status = #{status}
+        	</if>
+		</where>
+    </select>
+    
+    <!-- 分页查询 pagehelper用-->
+    <select id="findSysSsoPageHelp" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT 
+	        id,
+	        logo,
+	        app_name,
+	        sso_login,
+	        createtime,
+	        status
+        FROM sys_sso
+        <where>
+        	<if test="id != null and id != ''">
+				and id = #{id}
+        	</if>
+        	<if test="logo != null and logo != ''">
+				and logo = #{logo}
+        	</if>
+        	<if test="appName != null and appName != ''">
+				and app_name = #{appName}
+        	</if>
+        	<if test="ssoLogin != null and ssoLogin != ''">
+				and sso_login = #{ssoLogin}
+        	</if>
+        	<if test="createtime != null and createtime != ''">
+				and createtime = #{createtime}
+        	</if>
+        	<if test="status != null and status != ''">
+				and status = #{status}
+        	</if>
+		</where>
+    </select>
+    
+	<!-- 删除-->
+    <delete id="deleteSysSso" parameterType="java.util.Map" >
+        DELETE FROM sys_sso
+        WHERE
+	        id = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8" />
+    <title>统一认证中心</title>
+
+    <th:block th:include="common/common :: commonStyle" />
+    <script type="text/javascript" src="../static/js/wxLogin.js" th:src="@{/static/js/wxLogin.js}"></script>
+    <style>
+        #main {
+            cursor: pointer;
+        }
+        #weixin {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            display: none;
+            flex-wrap: nowrap;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+        <!-- header -->
+    <th:block th:include="common/common :: commonHeader" />
+        <!-- left -->
+    <th:block th:include="common/common :: commonLeft('help')" />
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>应用列表</h1>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="callout callout-info row">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-2" th:each="sysSso,iterStat:${sysSsoList}">
+                        <div class="thumbnail" style="height: 130px;width: 130px">
+                            <a th:href="${sysSso.ssoLogin}" target="_blank">
+                                <img class="lazy" th:src="${sysSso.imgUrl}" width="100" height="100"  th:alt="${sysSso.appName}"/>
+                                <a th:href="${sysSso.ssoLogin}" target="_blank" th:text="${sysSso.appName}" style="color: #000000;display: block;text-decoration:none;text-align: center;" ></a>
+                            </a>
+                            <!--<p>Bootstrap 优站精选频道收集了众多基于 Bootstrap 构建、设计精美的、有创意的网站。</p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- footer -->
+    <th:block th:include="common/common :: commonFooter" />
+</div>
+    <th:block th:include="common/common :: commonScript" />
+<script th:inline="javascript">
+    var sm_redirecturi = [[${sm_redirecturi}]];
+    var wx_appid = [[${wx_appid}]];
+    var uid = [[${xxlUser.userid}]];
+    var obj = new WxLogin({
+        id: "weixin",
+        appid: wx_appid,   //此处填申请的appid
+        scope: "snsapi_login",
+        redirect_uri: sm_redirecturi,
+        state: btoa(uid),
+        style: "white" //black white
+    });
+    $(function() {
+        $("#main").click(function() {
+            $("#weixin").css({"display":"flex"});
+            $("#weixin").fadeIn("slow");
+        });
+        $("#weixin").click(function() {
+            $("#weixin").css({"display":"none"});
+            $("#weixin").fadeOut("slow");
+        })
+    });
+</script>
+</body>
+</html>
